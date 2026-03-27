@@ -1,0 +1,168 @@
+{
+  "session_id": "session-2026-03-27-office-worker",
+  "date": "2026-03-27",
+  "user_profile": "utilisateur lambda de back-office commercial",
+  "goal": "Traiter les demandes clients du jour, mettre a jour les outils internes et preparer les relances.",
+  "process_context": "gestion-quotidienne-des-demandes-clients",
+  "declared_procedure": "Lire les demandes, verifier les donnees dans le CRM, mettre a jour le tableau de suivi, preparer une reponse, puis transmettre si une validation est necessaire.",
+  "expected_outcomes": [
+    "demandes qualifiees",
+    "CRM a jour",
+    "suivi consolide",
+    "reponses ou relances preparees"
+  ],
+  "additional_context": "L'utilisateur travaille entre email, CRM, tableur et messagerie d'equipe. Les taches sont repetitives mais comportent plusieurs decisions et recherches de documents.",
+  "activities": [
+    {
+      "title": "Trier la boite email du matin",
+      "app": "Gmail",
+      "action": "review",
+      "start": "2026-03-27T08:55:00",
+      "end": "2026-03-27T09:20:00",
+      "details": "Lecture et qualification des emails entrants, recherche des demandes urgentes, copie manuelle d'informations vers les notes de suivi.",
+      "inputs": [
+        "emails entrants",
+        "historique client"
+      ],
+      "outputs": [
+        "liste de demandes priorisees"
+      ],
+      "tags": [
+        "triage",
+        "search",
+        "manual"
+      ],
+      "blockers": [
+        "Il faut chercher dans plusieurs fils pour reconstituer le contexte."
+      ],
+      "notes": [
+        "Beaucoup de copier-coller entre email et tableau."
+      ],
+      "decisions": [
+        "Decider si la demande peut etre traitee sans validation manager."
+      ],
+      "documents_needed": [
+        "modele de reponse client",
+        "politique d'escalade"
+      ]
+    },
+    {
+      "title": "Verifier les informations dans le CRM",
+      "app": "Salesforce",
+      "action": "update",
+      "start": "2026-03-27T09:22:00",
+      "end": "2026-03-27T09:48:00",
+      "details": "Ouverture des fiches clients, verification des statuts, ajout de notes et correction de champs incomplets.",
+      "inputs": [
+        "liste de demandes priorisees"
+      ],
+      "outputs": [
+        "fiches CRM mises a jour"
+      ],
+      "tags": [
+        "crm",
+        "validation",
+        "manual_transcription"
+      ],
+      "blockers": [
+        "Certaines informations proviennent d'emails et doivent etre retapees."
+      ],
+      "notes": [
+        "L'utilisateur hesite parfois sur le bon statut a appliquer."
+      ],
+      "decisions": [
+        "Choisir le statut commercial correct selon le contexte du client."
+      ],
+      "documents_needed": [
+        "glossaire des statuts CRM",
+        "regles de qualification"
+      ]
+    },
+    {
+      "title": "Mettre a jour le tableau de suivi",
+      "app": "Google Sheets",
+      "action": "save",
+      "start": "2026-03-27T09:50:00",
+      "end": "2026-03-27T10:15:00",
+      "details": "Saisie des informations deja presentes dans le CRM pour suivre l'activite du jour.",
+      "inputs": [
+        "fiches CRM mises a jour"
+      ],
+      "outputs": [
+        "tableau de suivi complete"
+      ],
+      "tags": [
+        "double_entry",
+        "reporting"
+      ],
+      "blockers": [
+        "Double saisie CRM + tableur."
+      ],
+      "notes": [
+        "Tache repetitive et peu differenciante."
+      ],
+      "documents_needed": [
+        "modele de reporting quotidien"
+      ]
+    },
+    {
+      "title": "Demander une validation sur les cas sensibles",
+      "app": "Slack",
+      "action": "submit",
+      "start": "2026-03-27T10:20:00",
+      "end": "2026-03-27T10:35:00",
+      "details": "Preparation d'un message de synthese pour obtenir une validation du manager sur des remises exceptionnelles.",
+      "inputs": [
+        "tableau de suivi complete",
+        "cas clients sensibles"
+      ],
+      "outputs": [
+        "messages de validation envoyes"
+      ],
+      "tags": [
+        "approval",
+        "waiting"
+      ],
+      "blockers": [
+        "Le delai de reponse ralentit la suite du traitement."
+      ],
+      "notes": [
+        "Chaque demande exige une synthese redigee a la main."
+      ],
+      "decisions": [
+        "Determiner si la remise exceptionnelle depasse le seuil standard."
+      ],
+      "documents_needed": [
+        "politique tarifaire",
+        "seuils de delegation"
+      ]
+    },
+    {
+      "title": "Rediger les reponses clients et relances",
+      "app": "Gmail",
+      "action": "send",
+      "start": "2026-03-27T10:45:00",
+      "end": "2026-03-27T11:30:00",
+      "details": "Preparation des emails sortants, personnalisation des modeles, puis envoi ou programmation de relances.",
+      "inputs": [
+        "messages de validation envoyes",
+        "modele de reponse client"
+      ],
+      "outputs": [
+        "emails clients envoyes",
+        "relances planifiees"
+      ],
+      "tags": [
+        "communication",
+        "template"
+      ],
+      "notes": [
+        "Les reponses suivent des structures tres proches."
+      ],
+      "documents_needed": [
+        "bibliotheque de reponses types",
+        "SLA client"
+      ]
+    }
+  ]
+}
