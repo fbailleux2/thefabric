@@ -6,7 +6,20 @@ from typing import Any, Dict, List
 from ..models import DailySession
 
 
-def build_pyspur_workflow(session: DailySession, analysis: Dict[str, Any]) -> Dict[str, Any]:
+def build_pyspur_workflow(
+    session: DailySession,
+    analysis: Dict[str, Any],
+    llm_model: str = "openai/chatgpt-4o-latest",
+) -> Dict[str, Any]:
+    """Build a PySpur workflow definition from TheFabric analysis.
+
+    Args:
+        session: The DailySession being processed.
+        analysis: Output of analyze_session().
+        llm_model: LLM model identifier as used by PySpur (e.g. "openai/chatgpt-4o-latest",
+                   "anthropic/claude-sonnet-4-6", "ollama/mistral"). Defaults to OpenAI GPT-4o.
+                   Set via --pyspur-model CLI flag or PYSPUR_MODEL env var.
+    """
     input_schema = {
         "session_summary": "string",
         "process_context": "string",
@@ -85,7 +98,7 @@ def build_pyspur_workflow(session: DailySession, analysis: Dict[str, Any]) -> Di
                 "output_json_schema": planner_output_json,
                 "has_fixed_output": False,
                 "llm_info": {
-                    "model": "openai/chatgpt-4o-latest",
+                    "model": llm_model,
                     "max_tokens": 4096,
                     "temperature": 0.2,
                     "top_p": 0.9,
@@ -122,7 +135,7 @@ def build_pyspur_workflow(session: DailySession, analysis: Dict[str, Any]) -> Di
                 "output_json_schema": delivery_output_json,
                 "has_fixed_output": False,
                 "llm_info": {
-                    "model": "openai/chatgpt-4o-latest",
+                    "model": llm_model,
                     "max_tokens": 4096,
                     "temperature": 0.3,
                     "top_p": 0.9,

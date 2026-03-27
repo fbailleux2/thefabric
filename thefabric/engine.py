@@ -19,12 +19,13 @@ def run_thefabric(
     bundlefabric_bundles_dir: Path,
     kfabric_url: Optional[str] = None,
     kfabric_api_key: Optional[str] = None,
+    pyspur_model: str = "openai/chatgpt-4o-latest",
 ) -> Dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     analysis = analyze_session(session)
     jean_marc_payload = build_jean_marc_payload(session, analysis)
-    pyspur_workflow = build_pyspur_workflow(session, analysis)
+    pyspur_workflow = build_pyspur_workflow(session, analysis, llm_model=pyspur_model)
     kfabric_plan = build_kfabric_plan(session, analysis, base_url=kfabric_url, api_key=kfabric_api_key)
     bundle_resolution = resolve_bundle(session, analysis, bundlefabric_bundles_dir, output_dir)
     hermes_payload = build_hermes_payload(session, analysis, bundle_resolution, kfabric_plan, output_dir)

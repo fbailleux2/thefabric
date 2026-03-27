@@ -97,7 +97,11 @@ def _score_bundle(analysis: Dict[str, Any], manifest: Dict[str, Any]) -> tuple:
 
 def _tps_score(manifest: Dict[str, Any]) -> float:
     temporal = manifest.get("temporal", {})
-    freshness = _as_float(temporal.get("freshness_score"), 0.5)
+    # Real BundleFabric manifests use "freshness" (not "freshness_score") — support both.
+    freshness = _as_float(
+        temporal.get("freshness") if temporal.get("freshness") is not None else temporal.get("freshness_score"),
+        0.5,
+    )
     usage_frequency = _as_float(temporal.get("usage_frequency"), 0.5)
     ecosystem_alignment = _as_float(temporal.get("ecosystem_alignment"), 0.5)
     return round(freshness * 0.4 + usage_frequency * 0.3 + ecosystem_alignment * 0.3, 4)
@@ -105,7 +109,8 @@ def _tps_score(manifest: Dict[str, Any]) -> float:
 
 def _recency_score(manifest: Dict[str, Any]) -> float:
     temporal = manifest.get("temporal", {})
-    raw = temporal.get("last_updated")
+    # Support both "last_updated" (TheFabric bundles) and "updated_at" (real BundleFabric manifests)
+    raw = temporal.get("last_updated") or manifest.get("updated_at")
     if not raw:
         return 0.5
     try:

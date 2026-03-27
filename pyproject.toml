@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "thefabric"
+version = "0.1.0"
+description = "TheFabric — Orchestrateur de sessions quotidiennes: Jean-Marc + PySpur + Hermes + BundleFabric + KFabric"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.11"
+# Zero runtime dependencies — uses only the Python standard library.
+# All HTTP calls use urllib.request; YAML is handled via the built-in parser.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-cov>=5.0"]
+
+[project.scripts]
+thefabric = "thefabric.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["thefabric"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v"
